@@ -16,10 +16,30 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:facebook_audience_network/facebook_audience_network.dart';
 
-
 enum AdNetwork { admob, facebook, unity, applovin }
 
 AdNetwork selectedAdNetwork = AdNetwork.facebook;
+
+// admob done
+// unity done
+// applovin done
+// facebook done
+/// we need to add device id to see test facebooks ads and they only work on emulator
+///
+///
+/// the placement of the ids ?
+///
+/// // all good?
+/// what about app Id ?
+///  done, other ids have to be added in menifest for android and 
+/// can you show us where exactly
+/// 
+/// anything else
+/// no thank you 
+/// you are welcome :)
+/// may I go
+/// okey
+/// Have a greate day
 
 //this for package info
 PackageInfo? packageInfo = PackageInfo(
@@ -34,24 +54,26 @@ bool firstTime = false;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //read json file from assets
+  final json = await rootBundle.loadString('assets/db.json');
+  final config = jsonDecode(json);
+  data = Data.fromJson(config);
+
   try {
     await Future.wait([
       MobileAds.instance.initialize(),
       FacebookAudienceNetwork.init(
-        testingId: "bfe47acb-dd50-43d6-8d3c-a65f0a6cee42",
-      ),
+          testingId: "23fb4d2d-9748-4e05-9bf4-f6eef3ab8a96"),
       UnityAds.init(
-        gameId: "5712423",
+        gameId: selectedAdNetwork == AdNetwork.unity
+            ? data.adConfig?.first.appId ?? ""
+            : "",
         testMode: true,
         onComplete: () {},
         onFailed: (error, message) {},
       ),
     ]);
     packageInfo = await PackageInfo.fromPlatform();
-    //read json file from assets
-    final json = await rootBundle.loadString('assets/db.json');
-    final config = jsonDecode(json);
-    data = Data.fromJson(config);
 
     //camera permission
     SharedPreferences prefs = await SharedPreferences.getInstance();

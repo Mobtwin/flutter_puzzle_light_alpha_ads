@@ -154,15 +154,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             Container(
                               height: 30,
                               width: 100,
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
                               decoration: BoxDecoration(
-                                color: hexToColor(value.data.mainColor.toString()),
+                                color:
+                                    hexToColor(value.data.mainColor.toString()),
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  appIcon(IconsConstants.coin, false, context, 16, 16,
+                                  appIcon(IconsConstants.coin, false, context,
+                                      16, 16,
                                       color: Colors.white),
                                   const SizedBox(
                                     width: 10,
@@ -199,13 +202,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: 30,
                                 height: 30,
                                 decoration: ShapeDecoration(
-                                  color: Colors.black.withOpacity(0.07000000029802322),
+                                  color: Colors.black
+                                      .withOpacity(0.07000000029802322),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                 ),
                                 child: Center(
-                                  child: appIcon(IconsConstants.profile, false, context, 16, 16,
+                                  child: appIcon(IconsConstants.profile, false,
+                                      context, 16, 16,
                                       color: Colors.black),
                                 ),
                               ),
@@ -224,9 +229,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.circular(30),
                           onTap: () {
                             AppInterstitialAd.show();
-                            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                              statusBarColor: colorOflevel(
-                                      value.data.puzzles![index].level.toString().toLowerCase())
+                            SystemChrome.setSystemUIOverlayStyle(
+                                SystemUiOverlayStyle(
+                              statusBarColor: colorOflevel(value
+                                      .data.puzzles![index].level
+                                      .toString()
+                                      .toLowerCase())
                                   .withOpacity(0.20),
                             ));
                             Navigator.push(
@@ -234,15 +242,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 MaterialPageRoute(
                                   builder: (context) => LevelScreen(
                                     defficulty: getDifficult(index),
-                                    title: value.data.puzzles![index].level.toString(),
-                                    mission: value.data.puzzles![index].images!.length,
+                                    title: value.data.puzzles![index].level
+                                        .toString(),
+                                    mission: value
+                                        .data.puzzles![index].images!.length,
                                     image:
                                         'assets/images/${value.data.puzzles![index].level.toString().toLowerCase()}.png',
-                                    color: colorOflevel(value.data.puzzles![index].level
+                                    color: colorOflevel(value
+                                            .data.puzzles![index].level
                                             .toString()
                                             .toLowerCase())
                                         .withOpacity(0.20),
-                                    missions: value.data.puzzles![index].images!,
+                                    missions:
+                                        value.data.puzzles![index].images!,
                                   ),
                                 ));
                           },

@@ -1,5 +1,6 @@
 import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/material.dart';
+import 'package:puzzle/ad_manager/ad_ids.dart';
 
 abstract class FBInterstitialAd {
   static bool _isAdLoaded = false;
@@ -7,7 +8,7 @@ abstract class FBInterstitialAd {
   static void load() {
     try {
       FacebookAudienceNetwork.loadInterstitialAd(
-        placementId: "1256390695793858_1256391729127088",
+        placementId:AdIds.interstitital,
         listener: (result, value) {
           if (result == InterstitialAdResult.LOADED) {
             _isAdLoaded = true;
@@ -44,7 +45,7 @@ class FBNativeAdWidget extends StatelessWidget {
     return SizedBox(
       height: 300,
       child: FacebookNativeAd(
-        placementId: "1256390695793858_1256391839127077",
+        placementId: AdIds.native,
         adType: NativeAdType.NATIVE_AD,
         width: double.infinity,
         height: 300,
@@ -71,7 +72,7 @@ class FBBannerAdWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FacebookBannerAd(
-      placementId: "1256390695793858_1256391625793765",
+      placementId:AdIds.banner,
       bannerSize: BannerSize.STANDARD,
       listener: (result, value) {
         switch (result) {

@@ -26,31 +26,19 @@
   ],
   "puzzles": [
     {
-      "images": [
-        "assets/mission1.jpeg",
-        "assets/mission2.jpeg"
-      ],
+      "images": ["assets/mission1.jpeg", "assets/mission2.jpeg"],
       "level": "Amateur"
     },
     {
-      "images": [
-        "assets/mission1.jpeg",
-        "assets/mission2.jpeg"
-      ],
+      "images": ["assets/mission1.jpeg", "assets/mission2.jpeg"],
       "level": "Beginner"
     },
     {
-      "images": [
-        "assets/mission1.jpeg",
-        "assets/mission2.jpeg"
-      ],
+      "images": ["assets/mission1.jpeg", "assets/mission2.jpeg"],
       "level": "Trainee"
     },
     {
-      "images": [
-        "assets/mission1.jpeg",
-        "assets/mission2.jpeg"
-      ],
+      "images": ["assets/mission1.jpeg", "assets/mission2.jpeg"],
       "level": "Intellectual"
     },
     {
@@ -75,19 +63,32 @@
   "ad_priority": [
     {
       "network": "AdMob",
-      "priority": 2
+      "priority": 1,
+      "interstitial": "ca-app-pub-3940256099942544/1033173712",
+      "native": "ca-app-pub-3940256099942544/2247696110",
+      "banner": "ca-app-pub-3940256099942544/6300978111"
     },
     {
       "network": "UnityAds",
-      "priority": 3
+      "priority": 4,
+      "interstitial": "Interstitial_Android",
+      "native": "",
+      "banner": "Banner_Android",
+      "app_id": "5712423"
     },
     {
       "network": "MetaAds",
-      "priority": 1
+      "priority": 2,
+      "interstitial": "1256390695793858_1256391729127088",
+      "native": "1256390695793858_1256391839127077",
+      "banner": "1256390695793858_1256391625793765"
     },
     {
       "network": "AppLovin",
-      "priority": 4
+      "priority": 3,
+      "interstitial": "26d512ea6876f2ec",
+      "native": "9c887ce9aa106336",
+      "banner": "727ca3a0e2d391e8"
     }
   ]
 }

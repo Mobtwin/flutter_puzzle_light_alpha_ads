@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:puzzle/ad_manager/ad_ids.dart';
+
+// I make a new file and put all id variale their so you can easily change
+
+//
 
 abstract class AdMobInterstitialAd {
   static InterstitialAd? _interstitialAd;
@@ -7,7 +12,9 @@ abstract class AdMobInterstitialAd {
 
   static void load() {
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/1033173712', // Test ad unit ID
+
+      // admob interstitlal id here
+      adUnitId: AdIds.interstitital, 
       request: const AdRequest(), // No need for testDevices here
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
@@ -51,11 +58,10 @@ enum AdStates { loading, loaded, error }
 class AdMobNativeAdWidget extends StatefulWidget {
   const AdMobNativeAdWidget({
     super.key,
-    this.id = 'ca-app-pub-3940256099942544/2247696110',
+    
     this.templateType = TemplateType.medium,
   });
 
-  final String id;
   final TemplateType templateType;
 
   @override
@@ -69,7 +75,7 @@ class _AdMobNativeAdWidgetState extends State<AdMobNativeAdWidget> {
 
   void loadAd() async {
     NativeAd(
-      adUnitId: widget.id,
+      adUnitId: AdIds.native,
       listener: NativeAdListener(
         onAdLoaded: (ad) {
           _ad = ad as NativeAd;
@@ -125,7 +131,6 @@ class _AdMobNativeAdWidgetState extends State<AdMobNativeAdWidget> {
   void initState() {
     super.initState();
     try {
-      if (widget.id.isEmpty) throw Exception('Ad unit id is empty');
       loadAd();
     } catch (_) {
       adState.value = AdStates.error;
@@ -175,7 +180,7 @@ class _AdMobBannerAdWidgetState extends State<AdMobBannerAdWidget> {
 
   void loadAd() {
     _ad = BannerAd(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      adUnitId: AdIds.banner,
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(

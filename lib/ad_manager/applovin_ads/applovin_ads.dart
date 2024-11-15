@@ -1,19 +1,19 @@
 import 'package:applovin_max/applovin_max.dart';
 import 'package:flutter/material.dart';
+import 'package:puzzle/ad_manager/ad_ids.dart';
 
 abstract class AppLovinInterstitialAd {
-  static const _id = "26d512ea6876f2ec";
 
   static void load() {
     try {
-      AppLovinMAX.loadInterstitial(_id);
+      AppLovinMAX.loadInterstitial(AdIds.interstitital);
     } catch (_) {}
   }
 
   static Future<void> show() async {
-    if ((await AppLovinMAX.isInterstitialReady(_id)) == true) {
+    if ((await AppLovinMAX.isInterstitialReady(AdIds.interstitital)) == true) {
       try {
-        AppLovinMAX.showInterstitial(_id);
+        AppLovinMAX.showInterstitial(AdIds.interstitital);
         Future.delayed(const Duration(seconds: 10), () {
           load();
         });
@@ -30,7 +30,7 @@ class AppLovinNativeAdWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaxAdView(
-      adUnitId: '9c887ce9aa106336',
+      adUnitId:AdIds.native,
       adFormat: AdFormat.mrec,
       listener: AdViewAdListener(
         onAdLoadedCallback: (ad) {},
@@ -49,7 +49,7 @@ class AppLovinBannerAdWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaxAdView(
-      adUnitId: '727ca3a0e2d391e8',
+      adUnitId: AdIds.banner,
       adFormat: AdFormat.banner,
       listener: AdViewAdListener(
         onAdLoadedCallback: (ad) {},

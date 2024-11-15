@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:puzzle/ad_manager/ad_ids.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 
 abstract class UnityInterstitialAd {
@@ -7,7 +8,7 @@ abstract class UnityInterstitialAd {
   static Future<void> load() async {
     if (await UnityAds.isInitialized()) {
       UnityAds.load(
-        placementId: "Interstitial_Android",
+        placementId: AdIds.interstitital,
         onComplete: (placementId) {
           _isAdLoaded = true;
         },
@@ -22,7 +23,7 @@ abstract class UnityInterstitialAd {
   static void show() {
     if (_isAdLoaded) {
       UnityAds.showVideoAd(
-        placementId: "Interstitial_Android",
+        placementId: AdIds.interstitital,
         onComplete: (placementId) {
           print("Video completed");
           load();
@@ -47,7 +48,7 @@ class UnityBannerAdWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return UnityBannerAd(
-      placementId: "Banner_Android",
+      placementId: AdIds.banner,
       onLoad: (placementId) {},
       onFailed: (placementId, error, message) {},
       onClick: (placementId) {},

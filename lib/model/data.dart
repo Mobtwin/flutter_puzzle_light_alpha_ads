@@ -119,18 +119,31 @@ class Intro {
 class AdConfig {
   String? network;
   int? priority;
+  String? interstitial;
+  String? native;
+  String? banner;
+  String? appId;
 
-  AdConfig({this.network, this.priority});
+
+  AdConfig({this.network, this.priority, this.native, this.interstitial, this.banner, this.appId});
 
   AdConfig.fromJson(Map<String, dynamic> json) {
     network = json['network'];
     priority = json['priority'];
+    native = json['native'];
+    interstitial = json['interstitial'];
+    banner = json['banner'];
+    appId = json['app_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['network'] = network;
     data['priority'] = priority;
+    data['banner'] = banner;
+    data['interstitial'] = interstitial;
+    data['native'] = native;
+    data['app_id' ] = appId;
     return data;
   }
 }
