@@ -1,8 +1,17 @@
 import fs from "fs";
 import path from "path";
 import axios from "axios";
-import { BUILD_GRADLE } from "./template";
-
+import { ANDROID_MANIFEST, BUILD_GRADLE } from "./template";
+export interface IAds {
+  provider: "Admob" | "Facebook Audience Network" | "Unity Ads" | "AppLovin" | "UnityAds";
+  appId?: string;
+  smartBanner?: string;
+  nativeAds?: string;
+  interstitial?: string;
+  rewardedVideo?: string;
+  token?: string;
+  priority?: number;
+}
 export interface IStepContent {
   poster: string;
   title: string;
@@ -16,6 +25,14 @@ export interface IStep {
 export interface IPuzzle {
   images: string[];
   level: "easy" | "medium" | "hard";
+}
+export interface AdsPriority {
+  network:string;
+  priority:number;
+  interstitial?:string;
+  native?:string;
+  banner?:string;
+  app_id?:string;
 }
 async function downloadFile(
   url: string,
@@ -65,6 +82,8 @@ const saveToJson = async ({
   privacy = "path_to",
   splash_url,
   terms = "path_to",
+  ad_priority,
+
 }: {
   puzzles: IPuzzle[];
   app_name: string;
@@ -76,6 +95,8 @@ const saveToJson = async ({
   privacy: string;
   terms: string;
   intro: IStep[];
+  ad_priority: AdsPriority[];
+
 }) => {
   const filePath = path.join(__dirname, "..", "assets", "db.json");
   const dbData: {
@@ -89,6 +110,8 @@ const saveToJson = async ({
     privacy: string;
     terms: string;
     intro: any[];
+    ad_priority: AdsPriority[];
+
   } = {
     puzzles,
     app_name,
@@ -100,6 +123,8 @@ const saveToJson = async ({
     privacy,
     terms,
     intro:intro.map(i => ({title:i.content.title,description:i.content.description,icon:i.content.poster})),
+    ad_priority
+
   };
 
   try {
@@ -233,6 +258,37 @@ function replaceGradleFile() {
     console.error(`Failed to replace build.gradle file: ${error}`);
   }
 }
+function replaceManifestXML({
+  applicationName = "${applicationName}",
+  admobAppId = "ca-app-pub-3940256099942544~3347511713",
+  unityGameId = "5712423",
+  applovinSDKKey = "lv0C9ThoCyfGpyWxTbIaL9CW2ZnBnE7ShD_Ae4y8XEq41bsvIgfIMnmqfKC8PTTaz_BbB_betbZ654QrCA9PKI",
+}:{applicationName?:string,
+    admobAppId?: string,
+    unityGameId?: string,
+    applovinSDKKey?: string,
+  }) {
+  // Path to the manifest.xml file
+  const manifestXMLFilePath = path.join(
+    __dirname,
+    "..",
+    "android",
+    "app",
+    "src",
+    "main",
+    "AndroidManifest.xml"
+  );
+
+  const ANDROID_MANIFEST_XML = ANDROID_MANIFEST({ admobAppId,applicationName,unityGameId,applovinSDKKey });
+  try {
+    // Write the new content to the androidManifest.xml file, overwriting the existing file
+    fs.writeFileSync(manifestXMLFilePath, ANDROID_MANIFEST_XML, "utf8");
+
+    console.log(`Replaced AndroidManifest.xml file at ${manifestXMLFilePath}`);
+  } catch (error) {
+    console.error(`Failed to replace AndroidManifest.xml file: ${error}`);
+  }
+}
 const main = async () => {
   const metadata = JSON.parse(process.env.METADATA || "{}");
 
@@ -252,6 +308,17 @@ const main = async () => {
   const storePassword = process.env.KEY_PASSWORD || "password";
   const keyAlias = process.env.KEY_ALIAS || "key";
   const storeFile = process.env.KEYSTORE_FILE || "key-key.jks";
+
+  const preAds = metadata.ads as IAds[] || [];
+  const ads = preAds.map((a) => {
+    if (a.provider === "Unity Ads") {
+      return {
+        ...a,
+        provider: "UnityAds",
+      } as IAds;
+    }
+    return a;
+  });
 
   const downloadedIcon = await downloadFile(
     app_icon,
@@ -285,10 +352,14 @@ const main = async () => {
     privacy: privacy,
     terms: terms,
     intro: newIntro,
+    ad_priority: ads.map((a:IAds) => ({priority:a.priority,network:a.provider,app_id:a.appId,banner:a.smartBanner,interstitial:a.interstitial,native:a.nativeAds} as AdsPriority))
+
   });
 
   createKeyPropertiesFile({ keyAlias, keyPassword, storePassword, storeFile });
   replaceGradleFile();
+  replaceManifestXML({admobAppId:ads.find(a => a.provider === "Admob")?.appId,applovinSDKKey:ads.find(a => a.provider === "AppLovin")?.appId,unityGameId:ads.find(a => a.provider === "UnityAds")?.appId});
+
 };
 
 main();
