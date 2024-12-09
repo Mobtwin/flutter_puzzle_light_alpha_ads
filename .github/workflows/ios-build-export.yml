@@ -83,7 +83,7 @@ jobs:
 
       # Step 7: Build iOS app (signed)
       - name: Build iOS app (signed)
-        run: flutter build ios --release --no-codesign -v
+        run: flutter build ios --release --no-codesig
       # Step: Create Entitlements File
       - name: Create Entitlements File
         run: |
