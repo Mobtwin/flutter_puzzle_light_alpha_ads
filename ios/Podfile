@@ -33,7 +33,7 @@ target 'Runner' do
 
   # Pods for ads integrations
   pod 'Google-Mobile-Ads-SDK'   # AdMob
-  pod 'FBAudienceNetwork'       # Facebook Audience Network
+  pod 'FBAudienceNetwork', '6.15.2'       # Facebook Audience Network
   pod 'UnityAds'                # Unity Ads
   pod 'AppLovinSDK'             # AppLovin SDK
 
