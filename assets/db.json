@@ -63,7 +63,7 @@
   "ad_priority": [
     {
       "network": "AdMob",
-      "priority": 1,
+      "priority": 2,
       "interstitial": "ca-app-pub-3940256099942544/1033173712",
       "native": "ca-app-pub-3940256099942544/2247696110",
       "banner": "ca-app-pub-3940256099942544/6300978111"
@@ -78,7 +78,7 @@
     },
     {
       "network": "MetaAds",
-      "priority": 2,
+      "priority": 1,
       "interstitial": "1256390695793858_1256391729127088",
       "native": "1256390695793858_1256391839127077",
       "banner": "1256390695793858_1256391625793765"
